@@ -1,7 +1,7 @@
 {
-  "name": "matheus-apollo-server-node",
+  "name": "hardmode-back-end",
   "version": "0.1.0",
-  "description": "Servidor express com graphql",
+  "description": "Backend server of hardmode",
   "main": "index.js",
   "scripts": {
     "start": "nodemon --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"ts-node src/index.ts\"",
@@ -9,7 +9,6 @@
     "run-build": "node ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Matheus Lopes",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.11",

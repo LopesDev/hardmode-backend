@@ -1,3 +1,5 @@
+import { User } from '../schema/objects/User';
+
 const resolvers = {
     Query: {
         hello: (parent:any, args:any, context:any, info:any) => {
@@ -10,12 +12,27 @@ const resolvers = {
     },
 
     Mutation: {
-        test: function(parent:any, args:any, context:any, info:any) {
+        signup: function(parent:any, args:{ user: User }, context:any, info:any) {
+            const { user } = args;
 
-            // console.log({ parent, args, context, info });
-            const { title } = args;
-        
-            return title || 'Hello Mutation';
+            /**
+             * @todo Create mongoose User schema, and create a user on this end-point :) 
+             */
+            console.log(user);
+
+            return {
+                _id: '_id',
+                fullName: 'fullName',
+                nickName: 'nickName',
+                email: 'email',
+                cellphone: 'cellphone',
+                steamUrl: 'steamUrl',
+                instagramUrl: 'instagramUrl',
+                facebookUrl: 'facebookUrl',
+                githubUrl: 'githubUrl',
+                points: 0,
+                roles: ['USER']!,
+            };
         }
     }
 };

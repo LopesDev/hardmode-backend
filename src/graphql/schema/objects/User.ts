@@ -8,6 +8,7 @@ const USER = gql`
         fullName: String!
         nickName: String!
         email: String!
+        profileImage: String!
         cellphone: String
         steamUrl: String
         instagramUrl: String
@@ -22,6 +23,7 @@ interface User {
     _id: string,
     fullName: string,
     nickName: string,
+    profileImage: any,
     email: string,
     cellphone: string,
     steamUrl: string,

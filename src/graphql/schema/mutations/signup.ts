@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-express';
 
 const SIGN_UP = gql`
     type Mutation {
-        signup(user: UserData!): User!
+        signUp(user: UserData!): User!
     }
 `;
 

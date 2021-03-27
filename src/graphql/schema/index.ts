@@ -3,6 +3,7 @@ import { gql } from 'apollo-server-express';
 import ROLE from './enums/Role';
 import USER from './objects/User';
 import USER_DATA from './inputs/UserData';
+import SIGN_IN from './queries/signin';
 import SIGN_UP from './mutations/signup';
 
 const typeDefs = gql`
@@ -16,9 +17,7 @@ const typeDefs = gql`
     ${USER_DATA}
 
     # Queries
-    type Query {
-        hello(text: String): String!
-    }
+    ${SIGN_IN}
 
     # Mutations
     ${SIGN_UP}

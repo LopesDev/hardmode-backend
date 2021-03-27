@@ -1,17 +1,10 @@
-import signup from './mutations/signup';
+import signIn from './queries/signIn';
+import signUp from './mutations/signup';
 
 const resolvers = {
-    Query: {
-        hello: (parent:any, args:any, context:any, info:any) => {
+    Query: { signIn },
 
-            // console.log({ parent, args, context, info });
-            const { text } = args;
-        
-            return text || 'Hello Word!';
-        },  
-    },
-
-    Mutation: { signup }
+    Mutation: { signUp }
 };
 
 export default resolvers;

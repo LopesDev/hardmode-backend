@@ -3,7 +3,8 @@ import { Storage, Bucket } from '@google-cloud/storage';
 
 interface CustomFile {
     filename: string,
-    buffer:Buffer
+    buffer:Buffer,
+    userId: string,
 }
 
 export default class StorageService {
@@ -25,13 +26,14 @@ export default class StorageService {
     }
 
     public async uploadFile(): Promise<string> {
-        const { filename, buffer } = this.customFile;
+        const { filename, buffer, userId } = this.customFile;
 
+        const renamedFile = `${userId}-${filename.replace(/ /g, '')}`;
         try {
-            const blob = this.bucket.file(filename.replace(/ /g, '_'));
+            const blob = this.bucket.file(renamedFile);
             await blob.save(buffer);
 
-            return `https://storage.googleapis.com/${this.bucket.name}/${blob.name}`;
+            return blob.publicUrl();
         } catch(err) {
             throw err;
         }

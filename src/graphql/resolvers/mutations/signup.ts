@@ -1,5 +1,8 @@
 import { Stream } from 'node:stream';
+import bcrypt from 'bcryptjs';
+
 import { User } from '../../schema/objects/User';
+import UserRepository from '../../../models/User';
 import StorageService from '../../../services/StorageService';
 
 interface Upload {
@@ -11,21 +14,24 @@ interface Upload {
 
 export default async function(parent:any, args:{ user: User }, context:any, info:any) {
     const { user: { profileImage, ...rest } } = args;
-
-    /**
-     * @todo Create mongoose User schema, and create a user on this end-point :) 
-     */
     const { createReadStream, encoding, filename, mimetype }:Upload = await profileImage;
 
     const stream = createReadStream();
 
     try {
+        const hashedPw = await bcrypt.hash(rest.password, 12);
+
+        const newUser = new UserRepository({
+            ...rest,
+            password: hashedPw
+        });
+
         const profileImageData = await new Promise<string>((resolve, reject) => {
             stream.on('data', async function(chunk) {
     
                 const buffer = Buffer.from(chunk);
     
-                const storageService = new StorageService({ buffer, filename });
+                const storageService = new StorageService({ buffer, filename, userId: newUser._id });
     
                 const publicUrl = await storageService.uploadFile();
                 resolve(publicUrl);
@@ -35,19 +41,13 @@ export default async function(parent:any, args:{ user: User }, context:any, info
             });
         });
 
+        newUser.profileImage = profileImageData;
+
+        const savedUser = await newUser.save();
+
         return {
-            _id: '_id',
-            fullName: 'fullName',
-            nickName: 'nickName',
-            email: 'email',
-            cellphone: 'cellphone',
-            profileImage: profileImageData,
-            steamUrl: 'steamUrl',
-            instagramUrl: 'instagramUrl',
-            facebookUrl: 'facebookUrl',
-            githubUrl: 'githubUrl',
-            points: 0,
-            roles: ['USER']!,
+            ...savedUser._doc,
+            _id: savedUser._id.toString(),
         };
     } catch(err) {
         console.log(err);

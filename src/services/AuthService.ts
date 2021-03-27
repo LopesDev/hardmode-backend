@@ -4,8 +4,14 @@ import { AuthenticationError } from 'apollo-server-errors';
 
 import { User } from '../graphql/schema/objects/User';
 
+export interface DecodedToken {
+    id: string,
+    email: string,
+    iat: number,
+    exp: number
+}
+
 class AuthService {
-    private secret: string = process.env.JWT_SECRET as string;
     private user: User;
 
     constructor(user: User){
@@ -18,7 +24,7 @@ class AuthService {
                 id: this.user._id,
                 email: this.user.email
             },
-            this.secret,
+            process.env.JWT_SECRET as string,
             { expiresIn: '1d' }
         );
     }
@@ -30,6 +36,21 @@ class AuthService {
 
         const token = this.generateUserToken();
         return token;
+    }
+
+    public static verifyToken(Authorization?: string): DecodedToken| undefined {
+        if (!Authorization) return;
+    
+        const token = Authorization.split(' ')[1];
+    
+        try {
+            const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string) as DecodedToken;
+            if (!decodedToken) return;
+
+            return decodedToken;
+        } catch (err) {
+            throw err;
+        }
     }
 
 }

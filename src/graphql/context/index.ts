@@ -1,14 +1,14 @@
 import { Request } from 'express';
+import AuthService from '../../services/AuthService';
 
 type ContextParams = {
     req: Request
 }
 
 export default function context({ req }: ContextParams){
-    // console.log(`Authorization: ${req.get('Authorization')}`);
+    const BearerToken = req.get('Authorization');
 
-    return { user: {
-        name: 'Matheus Lopes',
-        _id: 'Teste de Id'
-    } }
+    const AuthenticatedUser = AuthService.verifyToken(BearerToken);
+
+    return { AuthenticatedUser }
 }

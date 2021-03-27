@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server-express';
 
 const SIGN_IN = gql`
-    type Query {
+    extend type Query {
         signIn(email: String!, password: String!): SignInData!
     }
 `;

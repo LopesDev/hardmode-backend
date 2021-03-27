@@ -8,7 +8,7 @@ const USER = gql`
         fullName: String!
         nickName: String!
         email: String!
-        profileImage: String!
+        profileImage: String
         cellphone: String
         steamUrl: String
         instagramUrl: String

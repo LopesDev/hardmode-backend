@@ -1,4 +1,4 @@
-import signIn from './queries/signIn';
+import signIn from './queries/signInQuery';
 import signUp from './mutations/signup';
 
 const resolvers = {

@@ -7,7 +7,7 @@ interface CustomFile {
     userId: string,
 }
 
-export default class StorageService {
+class StorageService {
     private customFile:CustomFile;
 
     private bucket:Bucket;
@@ -39,3 +39,5 @@ export default class StorageService {
         }
     }
 }
+
+export default StorageService;

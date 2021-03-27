@@ -2,8 +2,13 @@ import { gql } from 'apollo-server-express';
 
 const SIGN_IN = gql`
     type Query {
-        signIn(email: String!, password: String!): User!
+        signIn(email: String!, password: String!): SignInData!
     }
 `;
 
-export default SIGN_IN;
+interface SignInData {
+    email: string,
+    password: string
+}
+
+export { SIGN_IN as default, SignInData };

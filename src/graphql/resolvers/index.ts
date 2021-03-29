@@ -1,40 +1,12 @@
-import { User } from '../schema/objects/User';
+import signIn from './queries/signInQuery';
+import getUser from './queries/getUserQuery';
+
+import signUp from './mutations/signup';
 
 const resolvers = {
-    Query: {
-        hello: (parent:any, args:any, context:any, info:any) => {
+    Query: { signIn, getUser },
 
-            // console.log({ parent, args, context, info });
-            const { text } = args;
-        
-            return text || 'Hello Word!';
-        },  
-    },
-
-    Mutation: {
-        signup: function(parent:any, args:{ user: User }, context:any, info:any) {
-            const { user } = args;
-
-            /**
-             * @todo Create mongoose User schema, and create a user on this end-point :) 
-             */
-            console.log(user);
-
-            return {
-                _id: '_id',
-                fullName: 'fullName',
-                nickName: 'nickName',
-                email: 'email',
-                cellphone: 'cellphone',
-                steamUrl: 'steamUrl',
-                instagramUrl: 'instagramUrl',
-                facebookUrl: 'facebookUrl',
-                githubUrl: 'githubUrl',
-                points: 0,
-                roles: ['USER']!,
-            };
-        }
-    }
+    Mutation: { signUp }
 };
 
 export default resolvers;

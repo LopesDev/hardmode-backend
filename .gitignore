@@ -6,3 +6,6 @@
 
 #enviroment variables
 .env
+
+# google cloud platform
+/credentials/

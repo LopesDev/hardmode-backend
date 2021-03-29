@@ -5,6 +5,8 @@ const INPUT_USER = gql`
         fullName: String!
         nickName: String!
         email: String!
+        password: String!
+        profileImage: Upload
         cellphone: String
         steamUrl: String
         instagramUrl: String

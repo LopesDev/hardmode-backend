@@ -1,3 +1,4 @@
+import { Stream } from 'node:stream';
 import { gql } from 'apollo-server-express';
 
 import { Role } from '../enums/Role';
@@ -21,11 +22,18 @@ const USER = gql`
     }
 `;
 
+interface Upload {
+    filename: string,
+    mimetype: MimeType,
+    encoding: string,
+    createReadStream: () => Stream,
+}
+
 interface User {
     _id: string,
     fullName: string,
     nickName: string,
-    profileImage: string | Promise<any>,
+    profileImage?: Promise<Upload>,
     password: string,
     email: string,
     cellphone: string,

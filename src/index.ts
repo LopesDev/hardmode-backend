@@ -20,6 +20,7 @@ const graphqlServer = new ApolloServer({
 const app = express();
 
 const { DB_HOST, DB_COLLECTION, DB_USER, DB_PASS, PORT } = process.env;
+
 mongoose.connect(
     `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}.njrgo.mongodb.net/${DB_COLLECTION}?retryWrites=true&w=majority`,
     { useNewUrlParser: true, useUnifiedTopology: true }
@@ -31,5 +32,6 @@ mongoose.connect(
     });
 })
 .catch(err => {
+    console.log(`Server error: ${err.message}`);
     throw err;
 });

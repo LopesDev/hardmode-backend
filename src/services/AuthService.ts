@@ -40,9 +40,9 @@ class AuthService {
 
     public static verifyToken(Authorization?: string): DecodedToken| undefined {
         if (!Authorization) return;
-    
+
         const token = Authorization.split(' ')[1];
-    
+
         try {
             const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string) as DecodedToken;
             if (!decodedToken) return;
